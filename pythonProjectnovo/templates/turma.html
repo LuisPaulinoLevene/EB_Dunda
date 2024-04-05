@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            height: 100vh; /* Adicionado para ocupar 100% da altura da tela */
+        }
+
+        .form-container {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex; /* Adicionado para usar flexbox no .form-container */
+            flex-direction: column; /* Alinha os elementos internos verticalmente */
+            align-items: center; /* Centraliza os elementos internos horizontalmente */
+            justify-content: center; /* Centraliza os elementos internos verticalmente */
+        }
+
+        .input-container {
+            width: 40%;
+            box-sizing: border-box;
+            margin-bottom: 16px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+        }
+
+        #okButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 24px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        #okButton:hover {
+            background-color: #45a049;
+        }
+
+        /* Adicionado estilo para o botão "Ver" */
+        #verButton {
+            background-color: #f44336;
+            color: white;
+            padding: 14px 24px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-top: 20px; /* Adicionado margem superior */
+        }
+
+        #verButton:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Cadastro de Alunos</h1>
+    <h2>Preencha o formulário abaixo e depois clique em OK para cadastrar novo aluno</h2>
+    <form id="formInserirAluno" class="form-container"> <!-- Adicionado uma classe ao formulário -->
+        <div class="input-container">
+            <input type="text" id="nome" name="nome" placeholder="Digite o nome completo">
+        </div>
+
+        <div class="input-container">
+            <select id="sexo" name="sexo">
+                <option value="" disabled selected>Selecione o Sexo</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+            </select>
+        </div>
+        <div class="input-container">
+            <input type="date" id="data_nascimento" name="data_nascimento">
+        </div>
+        <div class="input-container">
+            <input type="text" id="local_nascimento" name="local_nascimento" placeholder="Digite o local de nascimento">
+        </div>
+        <div class="input-container">
+            <input type="text" id="nome_encarregado" name="nome_encarregado" placeholder="Digite o nome do encarregado de educação">
+        </div>
+        <div class="input-container">
+            <input type="text" id="residencia" name="residencia" placeholder="Digite o endereço de residência">
+        </div>
+        <div class="input-container">
+            <input type="tel" id="contacto" name="contacto" placeholder="Digite o número de contacto">
+        </div>
+        <div class="input-container">
+            <select id="classe" name="classe">
+                <option value="" disabled selected>Selecione a Classe</option>
+                <option value="1a Classe">1ª Classe</option>
+                <option value="2a Classe">2ª Classe</option>
+                <option value="3a Classe">3ª Classe</option>
+                <option value="4a Classe">4ª Classe</option>
+                <option value="5a Classe">5ª Classe</option>
+                <option value="6a Classe">6ª Classe</option>
+                <option value="7a Classe">7ª Classe</option>
+                <option value="8a Classe">8ª Classe</option>
+                <option value="9a Classe">9ª Classe</option>
+            </select>
+        </div>
+        <div class="input-container">
+            <select id="turma" name="turma">
+                <option value="" disabled selected>Selecione a Turma</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="H">H</option>
+                <option value="I">I</option>
+                <option value="J">J</option>
+                <option value="K">K</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="N">N</option>
+                <option value="O">O</option>
+                <option value="P">P</option>
+                <option value="Q">Q</option>
+                <option value="R">R</option>
+                <option value="S">S</option>
+                <option value="T">T</option>
+                <option value="U">U</option>
+                <option value="V">V</option>
+                <option value="W">W</option>
+                <option value="X">X</option>
+                <option value="Y">Y</option>
+                <option value="Z">Z</option>
+            </select>
+        </div>
+
+        <br>
+
+        <button type="submit" id="okButton">OK</button>
+
+        <!-- Adicionado botão "Ver" -->
+        <button id="verButton">Ver</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Função para inserir aluno
+            $("#formInserirAluno").submit(function (event) {
+                event.preventDefault();
+
+                // Obtenha os valores dos campos do formulário
+                var nome = $("#nome").val();
+                var sexo = $("#sexo").val();
+                var data_nascimento = $("#data_nascimento").val();
+                var local_nascimento = $("#local_nascimento").val();
+                var nome_encarregado = $("#nome_encarregado").val();
+                var residencia = $("#residencia").val();
+                var contacto = $("#contacto").val();
+                var classe = $("#classe").val();
+                var turma = $("#turma").val();
+
+                // Envie os dados para o servidor usando o método POST do formulário
+                $.post("/inserir_aluno", {
+                    nome: nome,
+                    sexo: sexo,
+                    data_nascimento: data_nascimento,
+                    local_nascimento: local_nascimento,
+                    nome_encarregado: nome_encarregado,
+                    residencia: residencia,
+                    contacto: contacto,
+                    classe: classe,
+                    turma: turma
+                }, function (data) {
+                    // Manipule a resposta, se necessário
+                    // carregarAlunos(); // Removido, pois não temos a implementação de carregarAlunos
+                    location.reload(); // Recarregue a página
+                });
+            });
+
+            // Adicionar evento de clique ao botão "Ver"
+            $("#verButton").click(function () {
+                window.location.href = "/ver_todos_alunos.html"; // Redirecione para a página "ver_todos_alunos.html"
+            });
+        });
+    </script>
+
+</body>
+
+</html>

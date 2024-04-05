@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            display: none;
+        }
+
+        .class-buttons {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        #listaClasses {
+            position: absolute;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-buttons">
+            <button onclick="redirecionarParaCriarTurma()">Cadastrar Aluno</button>
+            <button onclick="mostrarCargaHoraria()">Carga Horária</button>
+            <button onclick="mostrarRelatorios()">Relatórios</button>
+            <button onclick="redirecionarParaVerTurma()">Ver uma Turma</button>
+        </div>
+    </nav>
+    <div class="class-buttons">
+        <select id="listaClasses" onchange="armazenarClasse()" onmouseover="mostrarClasses()" onmouseout="ocultarClasses()">
+            <!-- Inclui a palavra 'Selecione' como o primeiro elemento na lista -->
+            <script>
+                var classSelect = document.getElementById("listaClasses");
+                var optionSelect = document.createElement("option");
+                optionSelect.value = "";
+                optionSelect.text = "Selecione";
+                classSelect.add(optionSelect);
+
+                var classes = ["1ª", "2ª", "3ª", "4ª", "5ª", "6ª", "7ª", "8ª", "9ª"];
+                for (var i = 0; i < classes.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = classes[i]; // Corrigido para passar o nome da turma
+                    option.text = classes[i] + " Classe";
+                    classSelect.add(option);
+                }
+            </script>
+        </select>
+    </div>
+
+    <script>
+        var classeSelecionada;  // Variável para armazenar a classe selecionada
+
+        function mostrarClasses() {
+            var listaClasses = document.getElementById("listaClasses");
+            listaClasses.style.display = "block";
+        }
+
+        function ocultarClasses() {
+            var listaClasses = document.getElementById("listaClasses");
+            listaClasses.style.display = "none";
+        }
+
+        function armazenarClasse() {
+            var select = document.getElementById("listaClasses");
+            // Verifica se a opção selecionada não é a palavra 'Selecione'
+            if (select.value !== "") {
+                // Remove o caractere especial "ª" antes de armazenar a classe
+                classeSelecionada = select.value.replace(/\ª/g, '');
+                // Redireciona imediatamente para a página turma.html
+                window.location.href = "/turma?classe=" + encodeURIComponent(classeSelecionada);
+            }
+        }
+
+        // Função para redirecionar imediatamente para turma.html
+        function redirecionarParaCriarTurma() {
+            window.location.href = "/turma";
+        }
+
+        function mostrarCargaHoraria() {
+            // Implemente conforme necessário
+            alert("Mostrar Carga Horária");
+        }
+
+        function mostrarRelatorios() {
+            // Implemente conforme necessário
+            alert("Mostrar Relatórios");
+        }
+
+        function redirecionarParaVerTurma() {
+            // Redireciona para a página ver_turma.html
+            window.location.href = "/ver_turma.html";
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center; /* Centraliza o conteúdo na página */
+        }
+
+        h2 {
+            margin-top: 50px; /* Adiciona um espaço superior para melhorar a aparência */
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .acao {
+            text-align: center;
+        }
+
+        .acao button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .acao button:hover {
+            background-color: #ff6961;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Lista de Usuários</h2>
+
+{% if usuarios %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome de Usuário</th>
+                <th>Senha</th> <!-- Adiciona a coluna de senhas -->
+                <th>Ação</th> <!-- Adiciona a coluna de ação -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario[0] }}</td>
+                    <td>{{ usuario[1] }}</td>
+                    <td>{{ usuario[2] }}</td> <!-- Adiciona a coluna de senhas -->
+                    <td class="acao">
+                        <button onclick="apagarUsuario({{ usuario[0] }})">Apagar</button> <!-- Adiciona o botão de apagar -->
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Nenhum usuário cadastrado.</p>
+{% endif %}
+
+<script>
+    function apagarUsuario(idUsuario) {
+        // Faz uma requisição DELETE ao backend para apagar o usuário
+        fetch(`/apagar_usuario/${idUsuario}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (response.ok) {
+                // Atualiza a página ou realiza outra ação conforme necessário
+                window.location.reload();
+            } else {
+                console.error('Erro ao apagar o usuário');
+            }
+        }).catch(error => {
+            console.error('Erro ao realizar a requisição DELETE:', error);
+        });
+    }
+</script>
+
+</body>
+</html>

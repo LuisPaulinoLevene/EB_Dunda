@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registar DAE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #333;
+      padding: 15px;
+      text-align: center;
+      color: white;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    input {
+      margin-bottom: 15px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #777;
+    }
+
+    #mensagem {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Registar DAE</h1>
+  </header>
+
+  <form id="registroForm">
+    <label for="username">Usuário:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Senha:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="button" onclick="registrarDAE()">Submeter</button>
+  </form>
+
+  <div id="mensagem"></div>
+
+  <script>
+    async function registrarDAE() {
+      const formulario = document.getElementById("registroForm");
+      const formData = new FormData(formulario);
+
+      try {
+        const resposta = await fetch("/registrar_dae", {
+          method: "POST",
+          body: formData
+        });
+
+        if (resposta.ok) {
+          exibirMensagem("DAE registrado com sucesso!");
+          formulario.reset();
+        } else {
+          const erro = await resposta.text();
+          throw new Error(erro || "Erro ao enviar formulário");
+        }
+      } catch (erro) {
+        console.error("Erro ao enviar formulário:", erro.message);
+      }
+    }
+
+    function exibirMensagem(mensagem) {
+      const mensagemElemento = document.getElementById("mensagem");
+      mensagemElemento.textContent = mensagem;
+      mensagemElemento.style.display = "block";
+
+      setTimeout(() => {
+        mensagemElemento.style.display = "none";
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>

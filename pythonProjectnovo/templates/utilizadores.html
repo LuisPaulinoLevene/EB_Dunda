@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center; /* Centraliza o conteúdo na página */
+        }
+
+        h2 {
+            margin-top: 50px; /* Adiciona um espaço superior para melhorar a aparência */
+        }
+
+        form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        nav {
+            background-color: #ddd;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            text-align: left;
+        }
+
+        nav button {
+            margin-right: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+        function registrarUsuario(event) {
+            event.preventDefault();  // Evita o envio padrão do formulário
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Envia os dados do formulário para o servidor
+            fetch('/registrar_usuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redireciona para outra página ou executa outra ação conforme necessário
+                    window.location.href = "/lista_usuarios";
+                } else {
+                    console.error('Erro ao registrar usuário');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao realizar a requisição POST:', error);
+            });
+        }
+
+        function verUsuarios() {
+            window.location.href = "/lista_usuarios";
+        }
+    </script>
+</head>
+<body>
+
+<nav>
+    <button onclick="verUsuarios()">Ver Usuários</button>
+</nav>
+
+<h2>Formulário de Registro</h2>
+
+<form id="registrationForm" onsubmit="registrarUsuario(event)">
+    <label for="username">Nome de Usuário:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Senha:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Registrar</button>
+</form>
+
+</body>
+</html>

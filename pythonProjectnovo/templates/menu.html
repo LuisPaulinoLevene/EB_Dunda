@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-start;
+            background-color: #ddd;
+            padding: 10px;
+        }
+
+        nav input {
+            padding: 8px;
+            margin: 0 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        nav button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        nav button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SISTEMA DE GESTÃO DA ESCOLA BÁSICA DE DUNDA</h1>
+</header>
+
+<nav>
+    <input type="text" id="username" placeholder="Usuário">
+    <input type="password" id="password" placeholder="Senha">
+    <button onclick="login()">Login</button>
+</nav>
+
+<script>
+    async function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Verificar se as credenciais são corretas
+        if (username === 'maquina' && password === '111') {
+            // Se as credenciais estiverem corretas, redirecionar para utilizadores.html
+            window.location.href = '/utilizadores.html';
+        } else {
+            alert('Credenciais inválidas');
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registar DAE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Partindo do topo */
+      min-height: 100vh; /* Garante que a página tenha pelo menos a altura total da viewport */
+    }
+
+    header {
+      background-color: #333;
+      padding: 15px;
+      text-align: center;
+      color: white;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px; /* ou qualquer margem desejada */
+    }
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    input {
+      margin-bottom: 15px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #777;
+    }
+
+    /* Adicionando estilos para a mensagem */
+    #mensagem {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Registar Professor</h1>
+  </header>
+
+  <form id="registroForm" action="/registrar_professor" method="POST">
+    <label for="username">Usuário:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Senha:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Submeter</button>
+  </form>
+
+
+  <!-- Adicionando um elemento para exibir a mensagem -->
+  <div id="mensagem"></div>
+
+  <script>
+    async function registrarProfessor() {
+      const formulario = document.getElementById("registroForm");
+      const formData = new FormData(formulario);
+
+      try {
+        const resposta = await fetch("/acessoprof", {
+          method: "POST",
+          body: formData
+        });
+
+        if (resposta.ok) {
+          // Exibir mensagem de sucesso
+          exibirMensagem("Credenciais de acesso ao professor criadas com sucesso!");
+
+          // Limpar os campos após 0 segundo
+          setTimeout(() => {
+            formulario.reset();
+          }, 0000);
+        } else {
+          console.error("Erro ao enviar formulário:", resposta.statusText);
+        }
+      } catch (erro) {
+        console.error("Erro ao enviar formulário:", erro.message);
+      }
+    }
+
+    function exibirMensagem(mensagem) {
+      const mensagemElemento = document.getElementById("mensagem");
+      mensagemElemento.innerHTML = mensagem;
+      mensagemElemento.style.display = "block";
+
+      // Ocultar a mensagem após 2 segundo
+      setTimeout(() => {
+        mensagemElemento.style.display = "none";
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>

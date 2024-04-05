@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleção de Ano</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            height: 100vh;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            display: none;
+        }
+
+        .nav-arrows {
+            display: flex;
+            align-items: center;
+        }
+
+        .arrow {
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-arrows">
+        <span class="arrow" onclick="navegarAnos(-1)">&#9665;</span>
+        <button onclick="mostrarAnos()">Anos</button>
+        <span class="arrow" onclick="navegarAnos(1)">&#9655;</span>
+    </div>
+    <select id="listaAnos">
+        <!-- Gera opções de ano incluindo o ano atual e anos anteriores -->
+        <script>
+            var currentYear = new Date().getFullYear();
+            var select = document.getElementById("listaAnos");
+            for (var i = currentYear; i >= currentYear - 100; i--) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                select.add(option);
+            }
+        </script>
+    </select>
+</nav>
+
+<script>
+    function mostrarAnos() {
+        var listaAnos = document.getElementById("listaAnos");
+        listaAnos.style.display = listaAnos.style.display === "block" ? "none" : "block";
+    }
+
+    function navegarAnos(direction) {
+        var select = document.getElementById("listaAnos");
+        var currentYear = new Date().getFullYear();
+        var selectedIndex = select.selectedIndex;
+        if (selectedIndex === -1) {
+            // Se nenhum ano estiver selecionado, seleciona o ano atual
+            select.selectedIndex = currentYear - (currentYear - 100);
+        } else {
+            // Navega pelos anos
+            select.selectedIndex = selectedIndex + direction;
+        }
+    }
+</script>
+
+</body>
+</html>
